@@ -38,12 +38,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        homeViewModel?.getHorizontalCards()
 
         homeViewModel?.text?.observe(viewLifecycleOwner) {
+
             Log.d("tag1", "observe")
-            binding.title.text = it.title1
-            binding.description.text = it.description
+
+            val hor = it[0]
+            binding.title.text = hor.title
+            binding.description.text = hor.description
 
         }
 

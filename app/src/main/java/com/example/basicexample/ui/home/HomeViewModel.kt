@@ -1,25 +1,32 @@
 package com.example.basicexample.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.basicexample.data.ContentRepository
+import com.example.basicexample.data.dto.HorizontalCard
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
-    val mockHc = HorizCart(
-        title1 = "dishidsbiu",
-        title2 = "dsc",
-        description = "disfdbfgdbtgbbgbgsgbbhidsbiu"
-    )
+    private val contentRepository = ContentRepository()
 
-    private val _text = MutableLiveData<HorizCart>().apply {
-        value = mockHc
+    private val _text = MutableLiveData<List<HorizontalCard>>()
+    val text: LiveData<List<HorizontalCard>> = _text
+
+    fun getHorizontalCards(){
+        viewModelScope.launch {
+
+            runCatching {
+                contentRepository.getHorizontalCards()
+            }.onFailure{
+                Log.e("tag1", "ex ${it.message}")
+            }.onSuccess {
+                _text.postValue(it)
+            }
+
+        }
     }
-    val text: LiveData<HorizCart> = _text
 }
-
-data class HorizCart(
-    val title1: String,
-    val title2: String,
-    val description: String,
-)

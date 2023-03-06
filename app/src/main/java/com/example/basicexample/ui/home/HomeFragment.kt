@@ -44,10 +44,14 @@ class HomeFragment : Fragment() {
 
             Log.d("tag1", "observe")
 
-            val hor = it[0]
-            binding.title.text = hor.title
-            binding.description.text = hor.description
 
+            binding.title.text = it.expiresIn.toString()
+            binding.description.text = it.accessToken
+
+        }
+
+        binding.button.setOnClickListener{
+            homeViewModel?.addCompany()
         }
 
 

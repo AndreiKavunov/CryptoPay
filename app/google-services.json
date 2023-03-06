@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "494052943014",
+    "project_id": "cryptopay-842f8",
+    "storage_bucket": "cryptopay-842f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494052943014:android:75efc7e28974192b280067",
+        "android_client_info": {
+          "package_name": "com.example.basicexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494052943014-jd36fncdkkpuerlikiuvvsc33fddpam3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjvbwZXv0dSbKlvoI1XU_GaJqCYIw_-AA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494052943014-jd36fncdkkpuerlikiuvvsc33fddpam3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

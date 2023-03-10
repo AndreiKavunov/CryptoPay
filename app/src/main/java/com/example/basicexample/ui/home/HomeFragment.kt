@@ -5,16 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.basicexample.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    var homeViewModel: HomeViewModel? = null
+    private val homeViewModel: HomeViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,8 +26,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -38,20 +37,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel?.getHorizontalCards()
+        homeViewModel.getHorizontalCards()
 
-        homeViewModel?.text?.observe(viewLifecycleOwner) {
+        homeViewModel.text.observe(viewLifecycleOwner) {
 
             Log.d("tag1", "observe")
 
 
-            binding.title.text = it.expiresIn.toString()
-            binding.description.text = it.accessToken
+            binding.title.text = it.title
+            binding.description.text = it.description
 
         }
 
         binding.button.setOnClickListener{
-            homeViewModel?.addCompany()
+//            homeViewModel?.addCompany()
+            homeViewModel.getCompany()
         }
 
 

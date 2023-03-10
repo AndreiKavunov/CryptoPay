@@ -1,9 +1,7 @@
 package com.example.basicexample.data
 
 import com.example.basicexample.data.dto.AccessToken
-import com.example.basicexample.data.dto.HorizontalCard
 import retrofit2.http.GET
-import retrofit2.http.Header
 
 interface OpenComApi {
 

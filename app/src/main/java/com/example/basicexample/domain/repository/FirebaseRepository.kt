@@ -1,4 +1,4 @@
-package com.example.basicexample.domain
+package com.example.basicexample.domain.repository
 
 interface FirebaseRepository {
 

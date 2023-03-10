@@ -5,26 +5,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.basicexample.data.ContentRepository
-import com.example.basicexample.data.dto.AccessToken
-import com.example.basicexample.data.dto.FirebaseRepositoryImp
-import com.example.basicexample.data.dto.HorizontalCard
-import com.example.basicexample.domain.FirebaseRepository
+
+import com.example.basicexample.data.FirebaseRepositoryImp
+
+import com.example.basicexample.domain.models.HorizontalCard
+import com.example.basicexample.domain.usecases.GetHorizontalCardUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getHorizontalCardUseCase: GetHorizontalCardUseCase
+) : ViewModel() {
 
-class HomeViewModel : ViewModel() {
-
-    private val contentRepository = ContentRepository()
     private val firebaseRepository = FirebaseRepositoryImp()
 
-    private val _text = MutableLiveData<AccessToken>()
-    val text: LiveData<AccessToken> = _text
+    private val _text = MutableLiveData<HorizontalCard>()
+    val text: LiveData<HorizontalCard> = _text
 
     fun getHorizontalCards(){
         viewModelScope.launch {
 
             runCatching {
-                contentRepository.getHorizontalCards()
+                getHorizontalCardUseCase.getHorizontalCard()
             }.onFailure{
                 Log.e("tag1", "ex ${it.message}")
             }.onSuccess {
@@ -36,7 +39,7 @@ class HomeViewModel : ViewModel() {
 
     fun  addCompany() {
         viewModelScope.launch {
-            firebaseRepository.addCompanyToFirestore("5", "57566757576567546343545667")
+            firebaseRepository.addCompanyToFirestore("5", "oihnugugk")
         }
     }
 
@@ -44,7 +47,12 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
 
             val x = firebaseRepository.getUserFavorites("3")
-            Log.d("tag1", "result $x")
+            x.onSuccess {
+                Log.d("tag1", "result $it")
+            }.onFailure {
+                Log.d("tag1", "fail ${it.message}")
+            }
+
         }
     }
 

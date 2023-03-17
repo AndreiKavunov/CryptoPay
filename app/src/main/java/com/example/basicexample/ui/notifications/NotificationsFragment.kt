@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.basicexample.databinding.FragmentNotificationsBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class NotificationsFragment : Fragment() {
 
@@ -29,9 +33,16 @@ class NotificationsFragment : Fragment() {
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+        lifecycleScope.launchWhenStarted {
+            notificationsViewModel.text.collect(){
+                textView.text = it }
+
         }
+
+//        notificationsViewModel.text
+//            .onEach { textView.text = it }
+//            .launchIn(lifecycleScope)
         return root
     }
 

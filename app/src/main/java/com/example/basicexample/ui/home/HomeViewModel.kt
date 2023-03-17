@@ -9,16 +9,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.basicexample.data.FirebaseRepositoryImp
 
 import com.example.basicexample.domain.models.HorizontalCard
+import com.example.basicexample.domain.repository.FirebaseRepository
 import com.example.basicexample.domain.usecases.GetHorizontalCardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getHorizontalCardUseCase: GetHorizontalCardUseCase
+    private val getHorizontalCardUseCase: GetHorizontalCardUseCase,
+    private val firebaseRepository: FirebaseRepository
 ) : ViewModel() {
 
-    private val firebaseRepository = FirebaseRepositoryImp()
+
 
     private val _text = MutableLiveData<HorizontalCard>()
     val text: LiveData<HorizontalCard> = _text

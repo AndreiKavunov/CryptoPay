@@ -61,6 +61,21 @@ class HomeFragment : Fragment() {
         super.onStart()
         Log.d("tag1", "onStart")
 
+        val list: MutableList<Int> = mutableListOf(1, 2, 3)
+
+        fun reverse(list: MutableList<Int>, newList: MutableList<Int>) {
+
+            if(list.size > 0){
+                newList.add(list.removeLast())
+                Log.d("tag1", "qqqqqqq")
+                reverse(list, newList)
+            }else return
+
+            Log.d("tag1", list.toString())
+            Log.d("tag1", "last $newList")
+        }
+
+        reverse(list, mutableListOf())
     }
 
     override fun onResume() {

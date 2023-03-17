@@ -1,12 +1,7 @@
 package com.example.basicexample.domain.repository
 
 interface FirebaseRepository {
+    suspend fun addCompanyToFirestore(userId: String, productId: String)
+    suspend fun getUserFavorites(cardNumber: String): Result<String>
 
-//    suspend fun addUserToFirestore(userId: String) : Result<Unit>
-
-    suspend fun addFavoritesToFirestore(userId: String, productId: String) : Result<List<String>>
-
-//    suspend fun removeFavoritesToFirestore(userId: String, productId: String) : Result<List<String>>
-//
-//    suspend fun getUserFavorites(userId: String) : Result<List<String>>
 }

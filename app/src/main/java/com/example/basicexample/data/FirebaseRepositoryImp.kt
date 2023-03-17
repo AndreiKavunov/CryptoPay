@@ -1,18 +1,20 @@
 package com.example.basicexample.data
 
+import com.example.basicexample.domain.repository.FirebaseRepository
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseRepositoryImp {
+class FirebaseRepositoryImp @Inject constructor(): FirebaseRepository {
 
     companion object {
         const val ROOT_NAME = "company"
         const val COLLECTION_NAME = "name"
     }
 
-    suspend fun addCompanyToFirestore(
+    override suspend fun addCompanyToFirestore(
         userId: String,
         productId: String
     ) {
@@ -26,7 +28,7 @@ class FirebaseRepositoryImp {
         }
     }
 
-    suspend fun getUserFavorites(cardNumber: String): Result<String> = runCatching {
+    override suspend fun getUserFavorites(cardNumber: String): Result<String> = runCatching {
         val result = Firebase.firestore
             .collection(ROOT_NAME)
             .document(cardNumber)

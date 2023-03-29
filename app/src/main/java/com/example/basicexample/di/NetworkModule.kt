@@ -1,6 +1,7 @@
 package com.example.basicexample.di
 
 import com.example.basicexample.data.OpenComApi
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -49,6 +50,12 @@ class NetworkModule {
     fun providesOpenComApi(openComRetrofit: Retrofit): OpenComApi {
         return openComRetrofit
             .create(OpenComApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesFirebase(): Firebase{
+        return Firebase
     }
 
 }

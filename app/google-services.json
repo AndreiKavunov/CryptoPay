@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "494052943014",
-    "project_id": "cryptopay-842f8",
-    "storage_bucket": "cryptopay-842f8.appspot.com"
+    "project_number": "243885347732",
+    "project_id": "i8cryptoline-f5f88",
+    "storage_bucket": "i8cryptoline-f5f88.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:494052943014:android:75efc7e28974192b280067",
+        "mobilesdk_app_id": "1:243885347732:android:490c563362dace56fbf581",
         "android_client_info": {
           "package_name": "com.example.basicexample"
         }
       },
       "oauth_client": [
         {
-          "client_id": "494052943014-jd36fncdkkpuerlikiuvvsc33fddpam3.apps.googleusercontent.com",
+          "client_id": "243885347732-t1o0eeco1s2k3sa9t4sotb8tg0nt3m0s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjvbwZXv0dSbKlvoI1XU_GaJqCYIw_-AA"
+          "current_key": "AIzaSyCOPquunaoAFBYSIkk8kmSF9Zc3OxtbbwE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "494052943014-jd36fncdkkpuerlikiuvvsc33fddpam3.apps.googleusercontent.com",
+              "client_id": "243885347732-t1o0eeco1s2k3sa9t4sotb8tg0nt3m0s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

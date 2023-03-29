@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginBottom="32dp"
+    tools:context=".ui.person.PersonFragment">
+
+    <Button
+        android:id="@+id/infoUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Информация о пользователе"/>
+
+    <Button
+        android:id="@+id/addUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавить пользователя"/>
+
+    <ImageView
+        android:id="@+id/qrId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/qr_binance" />
+
+</LinearLayout>

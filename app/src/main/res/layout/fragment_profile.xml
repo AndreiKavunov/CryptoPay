@@ -8,11 +8,11 @@
     tools:context=".ui.profile.ProfileFragment">
 
     <include
-        android:id="@+id/incAnonymousHome"
-        layout="@layout/inc_anonymous_home"
+        android:id="@+id/incAnonymousProfile"
+        layout="@layout/inc_anonymous_profile"
         tools:visibility="gone" />
 
     <include
-        android:id="@+id/incAuthorizedHome"
-        layout="@layout/inc_authirization_home" />
+        android:id="@+id/incAuthorizedProfile"
+        layout="@layout/inc_authorized_profile" />
 </LinearLayout>

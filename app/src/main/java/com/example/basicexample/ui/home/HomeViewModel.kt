@@ -1,61 +1,42 @@
 package com.example.basicexample.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-
-import com.example.basicexample.data.FirebaseRepositoryImp
+import androidx.lifecycle.*
 
 import com.example.basicexample.domain.models.HorizontalCard
-import com.example.basicexample.domain.repository.FirebaseRepository
+import com.example.basicexample.domain.models.PersonInfo
+import com.example.basicexample.domain.models.Transaction
+import com.example.basicexample.domain.repository.CompanyRepository
+import com.example.basicexample.domain.usecases.CreateTransactionUseCase
+import com.example.basicexample.domain.usecases.GetBalanceUseCase
 import com.example.basicexample.domain.usecases.GetHorizontalCardUseCase
+import com.example.basicexample.domain.usecases.GetInfoPersonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getHorizontalCardUseCase: GetHorizontalCardUseCase,
-    private val firebaseRepository: FirebaseRepository
+    private val createTransactionUseCase: CreateTransactionUseCase,
+    private val getBalanceUseCase: GetBalanceUseCase,
+    private val getInfoPersonUseCase: GetInfoPersonUseCase,
 ) : ViewModel() {
-
-
 
     private val _text = MutableLiveData<HorizontalCard>()
     val text: LiveData<HorizontalCard> = _text
 
-    fun getHorizontalCards(){
+    fun createTransaction(transaction: Transaction, sum: Float){
         viewModelScope.launch {
-
-            runCatching {
-                getHorizontalCardUseCase.getHorizontalCard()
-            }.onFailure{
-                Log.e("tag1", "ex ${it.message}")
-            }.onSuccess {
-                _text.postValue(it)
-            }
-
+            createTransactionUseCase.createTransaction(transaction, sum)
         }
     }
 
-    fun  addCompany() {
-        viewModelScope.launch {
-            firebaseRepository.addCompanyToFirestore("5", "oihnugugk")
-        }
+    fun getBalance(): LiveData<Result<Float>> = liveData{
+        emit(getBalanceUseCase.getBalance())
     }
 
-    fun  getCompany() {
-        viewModelScope.launch {
-
-            val x = firebaseRepository.getUserFavorites("3")
-            x.onSuccess {
-                Log.d("tag1", "result $it")
-            }.onFailure {
-                Log.d("tag1", "fail ${it.message}")
-            }
-
-        }
+    fun getPersonInfo(payId: String): LiveData<Result<PersonInfo>> = liveData{
+        Log.d("tag1", "getPersonInfo")
+        emit(getInfoPersonUseCase.getInfoPerson(payId))
     }
 
 }

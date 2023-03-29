@@ -12,14 +12,44 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.basicexample.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_person"
+        android:name="com.example.basicexample.ui.person.PersonFragment"
+        android:label="@string/title_person"
+        tools:layout="@layout/fragment_person" >
+        <action
+            android:id="@+id/action_navigation_person_to_addPersonDialogFragment"
+            app:destination="@id/addPersonDialogFragment" />
+        <action
+            android:id="@+id/action_navigation_person_to_infoPersonDialogFragment"
+            app:destination="@id/infoPersonDialogFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.basicexample.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_profile"
+        android:name="com.example.basicexample.ui.profile.ProfileFragment"
+        android:label="@string/Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_registrationDialogFragment"
+            app:destination="@id/registrationDialogFragment" >
+
+        </action>
+
+    </fragment>
+    <dialog
+        android:id="@+id/registrationDialogFragment"
+        android:name="com.example.basicexample.ui.profile.RegistrationDialogFragment"
+        android:label="RegistrationDialogFragment" >
+        <argument
+            android:name="IsRegistrated"
+            app:argType="boolean" />
+    </dialog>
+    <dialog
+        android:id="@+id/addPersonDialogFragment"
+        android:name="com.example.basicexample.ui.person.AddPersonDialogFragment"
+        android:label="AddPersonDialogFragment" />
+    <dialog
+        android:id="@+id/infoPersonDialogFragment"
+        android:name="com.example.basicexample.ui.person.InfoPersonDialogFragment"
+        android:label="InfoPersonDialogFragment" />
 </navigation>

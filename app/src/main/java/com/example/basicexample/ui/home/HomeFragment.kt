@@ -1,91 +1,112 @@
 package com.example.basicexample.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.basicexample.R
 import com.example.basicexample.databinding.FragmentHomeBinding
+import com.example.basicexample.databinding.FragmentProfileBinding
+import com.example.basicexample.domain.models.Transaction
+import com.example.basicexample.ui.profile.CurrentUser
+import com.example.basicexample.ui.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var binding: FragmentHomeBinding
 
     private val homeViewModel: HomeViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.bind(root)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        Log.d("tag1", "onCreateView")
         return root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.getHorizontalCards()
-
-        homeViewModel.text.observe(viewLifecycleOwner) {
-
-            Log.d("tag1", "observe")
-
-
-            binding.title.text = it.title
-            binding.description.text = it.description
+        lifecycleScope.launchWhenStarted {
+            profileViewModel.user.collect(){
+                showHome(it) }
 
         }
 
-        binding.button.setOnClickListener{
-//            homeViewModel?.addCompany()
-            homeViewModel.getCompany()
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showHome(user: CurrentUser){
+        if (user.email.isNotEmpty()) showAuthorizedHome() else showAnonymousHome()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showAuthorizedHome(){
+        binding.incAnonymousHome.root.isVisible = false
+        binding.incAuthorizedHome.root.isVisible = true
+
+        binding.incAuthorizedHome.button.setOnClickListener{
+
+            val sum = binding.incAuthorizedHome.sumTextTl.text.toString().toFloat()
+            val peyId = binding.incAuthorizedHome.personIdTextTl.text.toString()
+
+            homeViewModel.getBalance().observe(viewLifecycleOwner){
+                it.onSuccess {sumBalance->
+                    if(sumBalance >= sum){
+
+                        homeViewModel.getPersonInfo(peyId).observe(viewLifecycleOwner){
+
+                            it.onSuccess {person->
+                                if(person.payId.isNotBlank()){
+                                    val transaction = Transaction(companyId = "", personId = person.payId, token = "?",
+                                        date = LocalDateTime.now().toString(), payId = "?", binansId = "?",
+                                        sumRub = sum.toString(), sumToken = "?")
+                                    homeViewModel.createTransaction(transaction, sumBalance - sum)
+
+                                }else{
+                                    Toast.makeText(requireContext(), "Клиент не найден", Toast.LENGTH_SHORT).show()
+                                }
+                            }.onFailure {
+
+                            }
+
+                        }
+
+                    }else{
+                        Toast.makeText(requireContext(), "Недостаточно средств", Toast.LENGTH_SHORT).show()
+                    }
+
+                }.onFailure {
+
+                }
+
+            }
+
         }
-
-
+    }
+    private fun showAnonymousHome(){
+        binding.incAnonymousHome.root.isVisible = true
+        binding.incAuthorizedHome.root.isVisible = false
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("tag1", "onStart")
-
-        val list: MutableList<Int> = mutableListOf(1, 2, 3)
-
-        fun reverse(list: MutableList<Int>, newList: MutableList<Int>) {
-
-            if(list.size > 0){
-                newList.add(list.removeLast())
-                Log.d("tag1", "qqqqqqq")
-                reverse(list, newList)
-            }else return
-
-            Log.d("tag1", list.toString())
-            Log.d("tag1", "last $newList")
-        }
-
-        reverse(list, mutableListOf())
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d("tag1", "onResume")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
